@@ -45,16 +45,11 @@ export default function Hero() {
           <div className="flex-1 flex justify-center animate-slide-in-right">
             <div className="relative">
               <div className="w-80 h-80 rounded-3xl bg-gradient-to-br from-[var(--coral)] to-[var(--purple)] p-1 rotate-3 hover:rotate-6 transition-transform duration-500">
-                <div className="w-full h-full rounded-3xl bg-gradient-to-br from-[var(--teal)]/20 to-[var(--blue)]/20 backdrop-blur flex items-center justify-center">
-                  <div className="text-center space-y-3">
-                    <div className="w-24 h-24 rounded-full bg-white/50 mx-auto flex items-center justify-center">
-                      <svg className="w-12 h-12 text-[var(--dark-navy)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                    <p className="opacity-60" style={{ fontFamily: 'Outfit, sans-serif', fontSize: '0.875rem' }}>Shreyansh Jaiswal</p>
-                  </div>
-                </div>
+                <img
+                  src="/profile.jpg"
+                  alt="Shreyansh Jaiswal"
+                  className="w-full h-full rounded-3xl object-cover object-top"
+                />
               </div>
               {/* Decorative badge */}
               <div className="absolute -bottom-4 -right-4 bg-[var(--yellow)] text-[var(--dark-navy)] px-6 py-3 rounded-xl shadow-xl rotate-3 animate-bounce" style={{ animationDuration: '3s', fontWeight: 600 }}>

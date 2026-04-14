@@ -5,8 +5,8 @@ const LC_HANDLE = 'Shreyanshjais';
 const CC_HANDLE = 'shreyansh_jais';
 
 // Immediately shown; replaced by live API data if/when it arrives
-const CF_FALLBACK = { rating: 1675, rank: 'expert', maxRating: 1800 };
-const LC_FALLBACK = { solvedProblem: 497, mediumSolved: 285, hardSolved: 67 };
+const CF_FALLBACK = { rating: 1480, rank: 'specialist', maxRating: 1630 };
+const LC_FALLBACK = { solvedProblem: 498, mediumSolved: 285, hardSolved: 68 };
 const CC_FALLBACK = { currentRating: 1632, stars: '3★', highestRating: 1700 };
 
 const capitalize = str => (str ? str.charAt(0).toUpperCase() + str.slice(1) : str);
@@ -73,25 +73,31 @@ export default function CodingPlatforms() {
       })
       .catch(() => {/* keep fallback */ });
 
-    // LeetCode — Vercel-hosted API (always on, no cold starts)
-    fetch(`https://leetcode-api-faisalshohag.vercel.app/${LC_HANDLE}`)
+    // LeetCode — alfa-leetcode-api on Render (reliable, no cold-start issues)
+    fetch(`https://alfa-leetcode-api.onrender.com/${LC_HANDLE}/solved`)
       .then(r => r.json())
       .then(data => {
-        setLcData({
-          solvedProblem: data.totalSolved,
-          mediumSolved:  data.totalMedium,
-          hardSolved:    data.totalHard,
-        });
-        setLcLive(true);
+        if (data && data.solvedProblem !== undefined) {
+          setLcData({
+            solvedProblem: data.solvedProblem,
+            mediumSolved:  data.mediumSolved,
+            hardSolved:    data.hardSolved,
+          });
+          setLcLive(true);
+        }
       })
       .catch(() => { /* fallback stays */ });
 
-    // CodeChef — via corsproxy.io to bypass CORS
-    fetch(`https://corsproxy.io/?https://codechef-api.vercel.app/handle/${CC_HANDLE}`)
+    // CodeChef — competeapi (community-maintained, CORS-enabled)
+    fetch(`https://competeapi.vercel.app/user/codechef/${CC_HANDLE}`)
       .then(r => r.json())
       .then(data => {
-        if (data && data.currentRating) {
-          setCcData(data);
+        if (data && data.rating) {
+          setCcData({
+            currentRating: data.rating,
+            stars: data.stars ? `${data.stars}★` : CC_FALLBACK.stars,
+            highestRating: data.highest_rating ?? CC_FALLBACK.highestRating,
+          });
           setCcLive(true);
         }
       })
